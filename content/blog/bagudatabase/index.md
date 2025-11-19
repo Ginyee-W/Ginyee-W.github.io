@@ -36,7 +36,7 @@ tags:
 
 
 
-# 数据库中的事务
+## 数据库中的事务
 事务是数据库中**一组不可分割的操作集合**，这组操作要么全部执行成功（提交），要么全部执行失败（回滚），以此保证数据的一致性和完整性。
 
 
@@ -158,18 +158,7 @@ DROP、DELETE、TRUNCATE 是 SQL 中用于“删除数据或对象”的三个�
 | **触发器（Trigger）** | 会触发删除触发器（执行触发器定义的逻辑） | 不会触发删除触发器（直接清空表，跳过触发器） | 随表删除，触发器一并消失                |
 | **权限要求**        | 仅需表的 `DELETE` 权限                  | 需表的 `ALTER` 权限（因属于DDL操作）    | 需表/数据库的 `DROP` 权限（最高级权限） |
 
-
-
-
-
-## Themes
-
-Hugo Blox and its templates come with **automatic day (light) and night (dark) mode** built-in. Visitors can choose their preferred mode by clicking the sun/moon icon in the header.
-
-[Choose a stunning **theme** and **font**](https://docs.hugoblox.com/getting-started/customize/) for your site. Themes are fully customizable.
-
 ## License
 
-Copyright 2016-present [George Cushen](https://georgecushen.com).
+Copyright 2025-present [Ginyee-W](https://ginyee-w.github.io/).
 
-Released under the [MIT](https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md) license.
