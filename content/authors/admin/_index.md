@@ -13,7 +13,7 @@ last_name: aaa
 pronouns: he/him
 
 # Status emoji
-status:aaa
+status: aaa
   icon: 🦁
 
 # Is this the primary user of the site?
