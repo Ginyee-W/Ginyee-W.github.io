@@ -23,6 +23,8 @@ cascade:
     commentable: true
     show_related: true
     share: true
+    show_word_count: true
+    dark_mode: true
     # Just use Breadcrumb for navigation on blog post pages?
     show_breadcrumb: false
     header:
