@@ -1,77 +1,166 @@
 ---
-title: 🎉 Easily create your own simple yet highly customizable blog
-summary: Take full control of your personal brand and privacy by migrating away from the big tech platforms!
-date: 2010-10-27
+title: 数据库八股
+summary: 笔面试中有关数据库的八股试题整理
+date: 2025-11-19
 
 # Featured image
 # Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: 'Image credit: [**Unsplash**](https://unsplash.com)'
+
 
 authors:
   - admin
-  - Ted
+
 
 tags:
-  - Academic
-  - Hugo Blox
-  - Markdown
+  - 数据库
+  - 八股
+
 ---
 
-Welcome 👋
+
 
 {{< toc mobile_only=true is_open=true >}}
+**主属性**是指构成候选键（候选码）的属性。
 
-## Overview
+**候选键**是能唯一标识关系中每一个元组（记录）的属性或属性组。只要是候选键的组成部分，就称为主属性；不属于任何候选键的属性，则称为非主属性。
 
-1. The Hugo Blox website builder for Hugo, along with its starter templates, is designed for professional creators, educators, and teams/organizations - although it can be used to create any kind of site
-2. The template can be modified and customised to suit your needs. It's a good platform for anyone looking to take control of their data and online identity whilst having the convenience to start off with a **no-code solution (write in Markdown and customize with YAML parameters)** and having **flexibility to later add even deeper personalization with HTML and CSS**
-3. You can work with all your favourite tools and apps with hundreds of plugins and integrations to speed up your workflows, interact with your readers, and much more
 
-[//]: # '[![The template is mobile first with a responsive design to ensure that your site looks stunning on every device.](https://raw.githubusercontent.com/HugoBlox/hugo-blox-builder/main/templates/academic-cv/preview.png)](https://hugoblox.com)'
 
-### Get Started
+## 三个范式
 
-- 👉 [**Create a new site**](https://hugoblox.com/templates/)
-- 📚 [**Personalize your site**](https://docs.hugoblox.com/)
-- 💬 [Chat with the **Hugo Blox community**](https://discord.gg/z8wNYzb) or [**Hugo community**](https://discourse.gohugo.io)
-- 🐦 Twitter: [@GetResearchDev](https://x.com/BuildLore) [@GeorgeCushen](https://twitter.com/GeorgeCushen) #MadeWithHugoBlox
-- 💡 [Request a **feature** or report a **bug** for _Hugo Blox_](https://github.com/HugoBlox/hugo-blox-builder/issues)
-- ⬆️ **Updating Hugo Blox?** View the [Update Guide](https://docs.hugoblox.com/reference/update/) and [Release Notes](https://github.com/HugoBlox/hugo-blox-builder/releases)
+1.1NF：字段必须原子性，表中每一列都不可再拆
 
-## Crowd-funded open-source software
+2.2NF：每个非主属性必须完全依赖主键
 
-To help us develop this template and software sustainably under the MIT license, we ask all individuals and businesses that use it to help support its ongoing maintenance and development via sponsorship.
+3.3NF：非主属性不能依赖另一个非主属性
 
-### [❤️ Click here to become a sponsor and help support Hugo Blox's future ❤️](https://hugoblox.com/sponsor/)
 
-As a token of appreciation for sponsoring, you can **unlock [these](https://hugoblox.com/sponsor/) awesome rewards and extra features 🦄✨**
 
-## Ecosystem
+# 数据库中的事务
+事务是数据库中**一组不可分割的操作集合**，这组操作要么全部执行成功（提交），要么全部执行失败（回滚），以此保证数据的一致性和完整性。
 
-- **[Bibtex To Markdown](https://github.com/GetRD/academic-file-converter):** Automatically import publications from BibTeX
 
-## Inspiration
+## 一、事务的核心特性（ACID）
+事务必须满足ACID四大特性，这是事务可靠性的基础：
+1. **原子性（Atomicity）**  
+   事务是“最小执行单位”，操作不可拆分。例如转账时“扣款”和“到账”两步，要么都完成，要么都不执行（不会出现只扣款不到账的情况）。
+2. **一致性（Consistency）**  
+   事务执行前后，数据库数据需从一个合法状态转换到另一个合法状态，满足业务规则约束。例如转账前A有100元、B有50元，转账20元后A有80元、B有70元，总金额始终150元。
+3. **隔离性（Isolation）**  
+   多个事务并发执行时，一个事务的操作不会被其他事务干扰，每个事务都感觉自己是“单独执行”的。隔离性通过“隔离级别”控制，避免并发带来的脏读、不可重复读等问题。
+4. **持久性（Durability）**  
+   事务一旦提交（COMMIT），修改的数据会永久保存到数据库中，即使后续数据库崩溃，数据也不会丢失。
 
-[Learn what other **creators**](https://hugoblox.com/creators/) are building with this template.
 
-## Features
+## 二、事务的基本操作（SQL示例）
+以MySQL为例，事务的常用操作语句如下：
+1. **开启事务**：`START TRANSACTION;` 或 `BEGIN;`  
+2. **提交事务**：`COMMIT;`（所有操作执行成功后执行，数据永久生效）  
+3. **回滚事务**：`ROLLBACK;`（操作失败时执行，撤销已做的修改，数据恢复到事务开始前状态）  
+4. **保存点**：`SAVEPOINT 保存点名称;`（在事务中设置临时节点，可回滚到指定节点，而非整个事务）  
+   示例：`ROLLBACK TO SAVEPOINT sp1;`（回滚到保存点sp1）
 
-- **Page builder** - Create _anything_ with no-code [**blocks**](https://hugoblox.com/blocks/) and [**elements**](https://docs.hugoblox.com/reference/markdown/)
-- **Edit any type of content** - Blog posts, publications, talks, slides, projects, and more!
-- **Create content** in [**Markdown**](https://docs.hugoblox.com/reference/markdown/), [**Jupyter**](https://docs.hugoblox.com/getting-started/cms/), or [**RStudio**](https://docs.hugoblox.com/getting-started/cms/)
-- **Plugin System** - Fully customizable [**color** and **font themes**](https://docs.hugoblox.com/getting-started/customize/)
-- **Display Code and Math** - Code syntax highlighting and LaTeX math supported
-- **Integrations** - [Google Analytics](https://analytics.google.com), [Disqus commenting](https://disqus.com), Maps, Contact Forms, and more!
-- **Beautiful Site** - Simple and refreshing one-page design
-- **Industry-Leading SEO** - Help get your website found on search engines and social media
-- **Media Galleries** - Display your images and videos with captions in a customizable gallery
-- **Mobile Friendly** - Look amazing on every screen with a mobile friendly version of your site
-- **Multi-language** - 35+ language packs including English, 中文, and Português
-- **Multi-user** - Each author gets their own profile page
-- **Privacy Pack** - Assists with GDPR
-- **Stand Out** - Bring your site to life with animation, parallax backgrounds, and scroll effects
-- **One-Click Deployment** - No servers. No databases. Only files.
+
+## 三、事务的隔离级别（解决并发问题）
+多个事务并发时，可能出现脏读、不可重复读、幻读等问题，通过设置隔离级别可控制并发干扰程度。SQL标准定义了4种隔离级别，从低到高如下：
+
+| 隔离级别               | 说明                                                                 | 解决的并发问题       |
+|------------------------|----------------------------------------------------------------------|----------------------|
+| 读未提交（Read Uncommitted） | 一个事务可读取另一个事务未提交的修改                                 | 无（性能最高，安全性最低） |
+| 读已提交（Read Committed）   | 一个事务只能读取另一个事务已提交的修改（MySQL默认隔离级别）         | 脏读                 |
+| 可重复读（Repeatable Read）  | 事务内多次读取同一数据，结果始终一致（不受其他事务提交修改的影响）   | 脏读、不可重复读     |
+| 串行化（Serializable）       | 事务串行执行（禁止并发），完全隔离                                   | 脏读、不可重复读、幻读 |
+
+注：隔离级别越高，数据安全性越好，但并发性能越低，需根据业务场景权衡。
+
+
+## 四、事务的典型应用场景
+- 金融交易：转账、支付、充值等（需保证资金数据准确）；  
+- 订单处理：创建订单、扣减库存、支付状态更新等（需保证流程原子性）；  
+- 数据同步：多表关联修改（如用户删除时，同时删除关联的订单、评论数据）。
+脏读、不可重复读、幻读是事务并发执行时，因隔离性不足导致的三类典型问题，核心是“一个事务的操作被另一个事务干扰”，差异在于干扰的方式和结果，下面用通俗定义、业务示例和对比表清晰说明：
+
+
+### 一、脏读：读了“没提交且可能回滚”的脏数据
+#### 定义
+一个事务读取到了另一个事务**未提交**的修改数据，而这个未提交的修改后续可能被回滚（撤销），导致读取到的数据是“无效、不真实”的。
+
+#### 示例
+1. 事务A：A给B转账100元，执行“UPDATE 账户 SET 余额=余额+100 WHERE 用户名='B'”，但未执行`COMMIT`；  
+2. 事务B：查询自己的余额，读取到“余额+100”的结果；  
+3. 事务A：因异常执行`ROLLBACK`（撤销转账），B的余额实际未变化；  
+4. 结果：事务B读取到的“+100后余额”是“脏数据”，这就是脏读。
+
+
+### 二、不可重复读：同一事务内，多次读同一数据结果不一致
+#### 定义
+同一个事务在执行过程中，多次读取**同一批数据**，但因中间被其他事务**提交了修改/删除操作**，导致多次读取的结果不一样。  
+核心是“数据被修改/删除”导致的“读不一致”。
+
+#### 示例
+1. 事务A：第一次查询自己的余额，结果为1000元；  
+2. 事务B：给事务A的账户转入200元，执行`COMMIT`；  
+3. 事务A：再次查询自己的余额，结果为1200元；  
+4. 结果：事务A在同一个事务内，两次读同一数据（自己的余额）结果不同，这就是不可重复读。
+
+
+### 三、幻读：同一事务内，多次查同一范围结果集行数不一致
+#### 定义
+同一个事务在执行过程中，多次执行**同一范围查询**（如“查询余额>500的用户”），但因中间被其他事务**提交了新增操作**，导致多次查询的结果集“行数变多/变少”，像“出现幻觉”一样。  
+核心是“数据被新增”导致的“结果集行数不一致”（区别于不可重复读的“单条数据修改”）。
+
+#### 示例
+1. 事务A：执行“SELECT * FROM 账户 WHERE 余额>500”，查询到2个用户（B、C）；  
+2. 事务B：新增一个用户D，余额600元，执行`COMMIT`；  
+3. 事务A：再次执行同样的查询“SELECT * FROM 账户 WHERE 余额>500”，查询到3个用户（B、C、D）；  
+4. 结果：事务A在同一个事务内，两次读同一范围数据，行数不同，这就是幻读。
+
+
+### 四、三者核心区别对比表
+| 问题类型       | 核心原因                | 关键特征                  | 解决的最低隔离级别 |
+|----------------|-------------------------|---------------------------|--------------------|
+| 脏读           | 读取了其他事务**未提交**的修改 | 数据是“无效、可回滚”的    | 读已提交（Read Committed） |
+| 不可重复读     | 其他事务**提交了修改/删除**  | 同一数据，多次读结果不同  | 可重复读（Repeatable Read） |
+| 幻读           | 其他事务**提交了新增**        | 同一范围，多次读行数不同  | 串行化（Serializable） |
+
+注：隔离级别越高，并发性能越低。实际业务中，MySQL默认“读已提交”（解决脏读），多数场景下“可重复读”（解决脏读、不可重复读）已足够，“串行化”仅用于对数据一致性要求极高、并发量低的场景。
+
+
+
+
+
+# SQL中UNION与UNION ALL的区别与用法
+
+在SQL中，`UNION`和`UNION ALL`都用于**合并多个SELECT语句的结果集**，但在“去重”和“性能”上有关键差异，以下是详细对比：
+
+
+## 一、核心区别（表格对比）
+
+| 特性         | UNION                          | UNION ALL                      |
+|--------------|--------------------------------|--------------------------------|
+| **去重逻辑** | 合并结果后**自动去除重复行**    | 保留**所有行（包括重复行）**    |
+| **性能**     | 因去重需排序/比对，**性能较差** | 直接合并，**性能更优**          |
+| **适用场景** | 需要合并且去重的场景           | 明确无重复或需保留重复的场景     |
+
+# SQL中DROP、DELETE、TRUNCATE的区别与用法
+DROP、DELETE、TRUNCATE 是 SQL 中用于“删除数据或对象”的三个核心操作，但**删除范围、可逆性、性能、对数据库对象的影响**差异极大，核心区别在于“是否保留表结构”“是否可回滚”“删除粒度”。
+
+
+## 一、核心区别对比表（关键维度）
+| 维度                | DELETE                                  | TRUNCATE                                | DROP                                    |
+|---------------------|-----------------------------------------|-----------------------------------------|-----------------------------------------|
+| **操作对象**        | 表中的**数据行**（保留表结构、索引、约束） | 表中的**所有数据行**（保留表结构、索引、约束） | 整个**表/数据库对象**（含数据、结构、索引、约束） |
+| **SQL 语句类型**    | DML（数据操纵语言）                     | DDL（数据定义语言）                     | DDL（数据定义语言）                     |
+| **删除粒度**        | 可通过 `WHERE` 子句指定部分数据         | 只能删除全表数据（无 `WHERE` 支持）     | 直接删除整个对象（不可部分删除）        |
+| **可逆性**          | 支持事务回滚（`ROLLBACK`），删除后可恢复 | 不支持事务回滚（执行后立即生效）        | 不支持事务回滚（执行后立即生效）        |
+| **性能**            | 逐行删除，需记录日志，大数据量下较慢    | 不记录每行删除日志，直接清空表，速度极快 | 直接删除对象元数据，速度最快            |
+| **自增列（AUTO_INCREMENT）** | 保留自增列当前值（下次插入从当前值继续） | 重置自增列到初始值（下次插入从1开始）    | 随表删除，自增列一并消失                |
+| **触发器（Trigger）** | 会触发删除触发器（执行触发器定义的逻辑） | 不会触发删除触发器（直接清空表，跳过触发器） | 随表删除，触发器一并消失                |
+| **权限要求**        | 仅需表的 `DELETE` 权限                  | 需表的 `ALTER` 权限（因属于DDL操作）    | 需表/数据库的 `DROP` 权限（最高级权限） |
+
+
+
+
 
 ## Themes
 
