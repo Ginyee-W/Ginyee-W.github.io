@@ -32,11 +32,13 @@ profiles:
     url: 'mailto:wuji0031@ntu.edu.sg'
     label: E-mail Me
   - icon: brands/whatsapp
-    text: 89656615
+    label: +65 89656615
   - icon: brands/instagram
     url: https://www.instagram.com/horntail_w/#
   - icon: brands/weixin
-    url: https://www.linkedin.com/
+    label: wjy542219577
+  - icon: brands/qq
+    label: 542219577
   # Link to a PDF of your resume/CV - upload it to `static/uploads/resume.pdf`
   - icon: academicons/cv
     url: https://github.com/Ginyee-W
