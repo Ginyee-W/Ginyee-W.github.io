@@ -53,4 +53,4 @@ website: "https://ginyee-w.github.io/"
 ---
 
 本网页用作自学内容的整理和归档
-This webpage serves as a collection and archive for self-study materials.
+
