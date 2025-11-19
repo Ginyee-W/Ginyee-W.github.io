@@ -2,12 +2,7 @@
 # Display name
 title: 冰雪碧好喝
 
-# Name pronunciation (optional)
-name_pronunciation: aaa
 
-# Full name (for SEO)
-first_name: aaa
-last_name: aaa
 
 # Pronouns (optional)
 pronouns: he/him
@@ -27,8 +22,7 @@ organizations:
   - name: Nanyang Technological University
     url: https://www.ntu.edu.sg
 
-# Short bio (displayed in user profile at end of posts)
-bio: aaa
+
 
 # Social Networking
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
