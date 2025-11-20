@@ -26,6 +26,7 @@ tags:
 
 - **前缀匹配**：使用 `LIKE 'prefix%'` 的形式，这种情况下 MySQL 能够利用索引，比如：
 
+
 ```sql
 SELECT * FROM users WHERE username LIKE 'John%';
 ```
