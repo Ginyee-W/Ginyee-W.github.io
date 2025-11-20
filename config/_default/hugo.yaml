@@ -70,6 +70,10 @@ taxonomies:
   author: authors
 markup:
   _merge: deep
+  defaultMarkdownHandler: goldmark # 强制使用 goldmark 渲染器（Hugoblox 推荐）
+  goldmark:
+    renderer:
+      unsafe: true # 允许渲染行内代码、HTML 标签（关键配置）
 related:
   threshold: 80
   includeNewer: true
