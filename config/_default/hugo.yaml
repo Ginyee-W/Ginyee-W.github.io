@@ -69,7 +69,6 @@ taxonomies:
   category: categories
   author: authors
 markup:
-  _merge: deep
   defaultMarkdownHandler: goldmark # 强制使用 goldmark 渲染器（Hugoblox 推荐）
   goldmark:
     renderer:
