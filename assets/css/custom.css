@@ -156,3 +156,8 @@ code.language-sql .o {
   /* 保持圆形 */
   border-radius: 999px;
 }
+/* 只保留目录第一层（H2），隐藏更深层（H3/H4/...） */
+#TableOfContents ul ul ul,
+.tocbot-list .tocbot-list {
+  display: none !important;
+}
