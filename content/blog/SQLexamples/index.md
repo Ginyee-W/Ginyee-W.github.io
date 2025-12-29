@@ -362,7 +362,54 @@ FROM dwd_plan_event
 WHERE dt = CURRENT_DATE
 GROUP BY plan_id;
 ```
+## T7
+`完播率`
 
+计算每个视频的完成率，并按照完成率降序排列
+
+**表结构：**`tb_user_video_play_log`（视频播放日志）、`tb_video_info`（视频详情表）
+
+**tb_user_video_play_log（视频播放日志）字段：**
+- `id`（日志编号）
+- `uid`（用户ID）
+- `video_id`（视频ID）
+- `start_time`（视频开始时间，timestamp）
+- `end_time`（视频结束时间，timestamp）
+
+**tb_video_info（视频详情表）字段：**
+- `id`（视频序号，自增）
+- `video_id`（视频ID）
+- `author`（视频作者）
+- `tag`（视频标签）
+- `duration`（视频时长，second）
+- `release_time`（视频发布时间，timestamp）
+
+-- 每次播放的完成度 = 实际观看秒数 / 视频时长（>1 的按 1 计），
+
+-- 视频完成率 = 所有播放完成度的平均值
+
+```sql
+SELECT
+    v.video_id,
+    ROUND(
+        AVG(
+            LEAST(
+                1,
+                GREATEST(TIMESTAMPDIFF(SECOND, l.start_time, l.end_time), 0) / v.duration
+            )
+        ),
+        4
+    ) AS finish_rate
+FROM tb_user_video_play_log l
+JOIN tb_video_info v
+  ON l.video_id = v.video_id
+WHERE l.start_time IS NOT NULL
+  AND l.end_time   IS NOT NULL
+  AND l.end_time > l.start_time
+  AND v.duration > 0
+GROUP BY v.video_id
+ORDER BY finish_rate DESC;
+```
 ## License
 
 
