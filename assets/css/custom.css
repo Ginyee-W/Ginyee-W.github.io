@@ -157,7 +157,23 @@ code.language-sql .o {
   border-radius: 999px;
 }
 /* 只保留目录第一层（H2），隐藏更深层（H3/H4/...） */
-#TableOfContents ul ul ul,
-.tocbot-list .tocbot-list {
+/* HugoBlox/HB 右侧 On this page 目录：只保留二级标题（H2） */
+
+/* 1) 如果目录是嵌套 ul（常见） */
+nav.hb-toc ul ul ul{
+  display: none !important;
+}
+
+/* 2) 如果目录是“扁平列表”，用缩进 class 区分层级（Tailwind 常见 ms-/ml-/ps-/pl-） */
+nav.hb-toc a[class*="ms-"],
+nav.hb-toc a[class*="ml-"],
+nav.hb-toc a[class*="ps-"],
+nav.hb-toc a[class*="pl-"] {
+  display: none !important;
+}
+
+/* 3) 有些主题用内联 style 做缩进，再兜底一次 */
+nav.hb-toc a[style*="margin-left"],
+nav.hb-toc a[style*="padding-left"] {
   display: none !important;
 }
